@@ -16,15 +16,15 @@ type BeratResponse struct {
 
 type IndexResponse struct {
 	Berat []BeratResponse `json:"berat" form:"berat"`
-	Max  float32 `json:"max" form:"max"`
-	Min  float32 `json:"min" form:"min"`
-	Diff float32 `json:"diff" form:"diff"`
+	Max   float64         `json:"max" form:"max"`
+	Min   float64         `json:"min" form:"min"`
+	Diff  float64         `json:"diff" form:"diff"`
 }
 
 type AvgResponse struct {
-	Max  float32 `json:"max" form:"max"`
-	Min  float32 `json:"min" form:"min"`
-	Diff float32 `json:"diff" form:"diff"`
+	Max  float64 `json:"max" form:"max"`
+	Min  float64 `json:"min" form:"min"`
+	Diff float64 `json:"diff" form:"diff"`
 }
 
 //ResponseData : response format

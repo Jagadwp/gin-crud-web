@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"math"
 	"time"
 
 	"github.com/jagadwp/gin-crud-web/helper"
@@ -44,7 +45,7 @@ func (b *BeratService) GetAllBerat() (*helper.IndexResponse, error) {
 
 	var data helper.IndexResponse
 
-	lenData := float32(len(*berats))
+	lenData := float64(len(*berats))
 	totMax, totMin, totDiff := 0, 0, 0
 
 	for _, berat := range *berats {
@@ -63,11 +64,16 @@ func (b *BeratService) GetAllBerat() (*helper.IndexResponse, error) {
 		data.Berat = append(data.Berat, tempData)
 	}
 
-	data.Max= float32(totMax) / lenData
-	data.Min = float32(totMin) / lenData
-	data.Diff = float32(totDiff) / lenData
+	data.Max = roundFloat((float64(totMax) / lenData), 2)
+	data.Min = roundFloat((float64(totMin) / lenData), 2)
+	data.Diff = roundFloat((float64(totDiff) / lenData), 2)
 
 	return &data, nil
+}
+
+func roundFloat(val float64, precision uint) float64 {
+	ratio := math.Pow(10, float64(precision))
+	return math.Round(val*ratio) / ratio
 }
 
 // //CreateBerat : create a berat

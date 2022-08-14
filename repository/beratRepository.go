@@ -7,6 +7,14 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+type IBeratRepository interface {
+	GetBeratById(id int) (*model.Berat, error)
+	GetAllBerat() (*[]model.Berat, error)
+	CreateBerat(date time.Time, max, min, diff int) (*model.Berat, error)
+	UpdateBerat(berat *model.Berat) (*model.Berat, error)
+	DeleteBerat(berat *model.Berat) (*model.Berat, error)
+}
+
 type BeratRepository struct {
 	db *gorm.DB
 }

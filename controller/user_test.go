@@ -98,6 +98,16 @@ func TestCreateUser(t *testing.T) {
 	}
 }
 
+// func TestGetAllBerat(t *testing.T) {
+// 	gin.SetMode(gin.TestMode)
+// 	database.DatabaseInit()
+// 	w := httptest.NewRecorder()
+// 	c, _ := gin.CreateTestContext(w)
+// 	// controller.BeratController(c)
+// 	if w.Code == 200 {
+// 		t.Logf("Get Users List Success")
+// 	}
+// }
 func TestGetUsers(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	database.DatabaseInit()
