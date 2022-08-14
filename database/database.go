@@ -3,8 +3,8 @@ package database
 import (
 	"fmt"
 
-	"github.com/bonggar/gorestapi/config"
-	"github.com/bonggar/gorestapi/model"
+	"github.com/jagadwp/gin-crud-web/config"
+	"github.com/jagadwp/gin-crud-web/model"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )

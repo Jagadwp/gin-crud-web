@@ -3,8 +3,8 @@ package database
 import (
 	"testing"
 
-	"github.com/bonggar/gorestapi/model"
 	"github.com/gin-gonic/gin"
+	"github.com/jagadwp/gin-crud-web/model"
 )
 
 func TestDBInitialization(t *testing.T) {

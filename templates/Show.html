@@ -1,14 +1,13 @@
 {{ define "Show" }}
   {{ template "Header" }}
     <div class="container">
-        <h2> Tool</h2>
-        <p><strong>Name:</strong> {{ .Name }} </p>
-        <p><strong>Category:</strong> {{ .Category }} </p>
-        <p><strong>URL:</strong>{{ .URL }}</p>
-        <p><strong>Rating:</strong> {{ .Rating }} </p>
-        <p><strong>Notes:</strong> {{ .Notes }} </p>
+        <h2>Detail Berat</h2>
+        <p><strong>Tanggal: </strong> {{ .data.Date.Format "2006-01-02" }} </p>
+        <p><strong>Max: </strong> {{ .data.Max }} </p>
+        <p><strong>Min: </strong>{{ .data.Min }}</p>
+        <p><strong>Perbedaan: </strong> {{ .data.Diff }} </p>
         <br /> 
-        <a href="/edit?id={{ .Id }}" class="btn btn-primary">Edit</a>
+        <a href="/edit?id={{ .data.ID }}" class="btn btn-primary">Edit</a>
         <a href="/" class="btn btn-primary">Go back to tools</a>
     </div>
   {{ template "Footer" }}

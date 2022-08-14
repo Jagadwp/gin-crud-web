@@ -1,10 +1,10 @@
 {{ define "Index" }} 
 {{ template "Header" }}
 <div class="container">
-  <h2>Tool List</h2>
+  <h2>List Berat</h2>
 
   <p>
-    <a href="/new" class="btn btn-primary">New Tool</a>
+    <a href="/new" class="btn btn-primary">New Berat</a>
   </p>
   <table id="tabledata" class="display" style="width: 100%">
     <thead>
@@ -27,7 +27,7 @@
     <tbody>
       {{ range .data }}
       <tr>
-        <td>{{ .Date.Format "2006-1-2" }}</td>
+        <td>{{ .Date.Format "2006-01-02" }}</td>
         <td>{{ .Max }}</td>
         <td>{{ .Min }}</td>
         <td>{{ .Diff }}</td>

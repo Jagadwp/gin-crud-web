@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/bonggar/gorestapi/config"
-	"github.com/bonggar/gorestapi/controller"
-	"github.com/bonggar/gorestapi/database"
-	"github.com/bonggar/gorestapi/repository"
-	"github.com/bonggar/gorestapi/router"
-	"github.com/bonggar/gorestapi/service"
 	"github.com/gin-gonic/gin"
+	"github.com/jagadwp/gin-crud-web/config"
+	"github.com/jagadwp/gin-crud-web/controller"
+	"github.com/jagadwp/gin-crud-web/database"
+	"github.com/jagadwp/gin-crud-web/repository"
+	"github.com/jagadwp/gin-crud-web/router"
+	"github.com/jagadwp/gin-crud-web/service"
 )
 
 func main() {

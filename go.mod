@@ -1,4 +1,4 @@
-module github.com/bonggar/gorestapi
+module github.com/jagadwp/gin-crud-web
 
 go 1.13
 

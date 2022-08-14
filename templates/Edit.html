@@ -1,30 +1,23 @@
-{{ define "Edit.html" }}
+{{ define "Edit" }}
   {{ template "Header" }}
     <div class="container col-5">
-        <h2>Edit Tool</h2>  
-        <form method="POST" action="/update">
-          <input type="hidden" name="uid" value="{{ .Id }}" />
+        <h2>Edit Berat</h2>  
+        {{$date := .data.Date.Format "2006-01-02"}}
+        <form method="POST" action="/update?id={{ .data.ID }}">
+          <input type="hidden" name="id" value="{{ .data.ID }}" />
           <div class="form-group">
-              <label> Name </label>
-              <input type="text" name="name" value="{{ .Name }}" class="form-control" />
+              <label> Tanggal </label>
+              <input type="date" name="date" value="{{ $date }}" class="form-control" />
           </div>
           <div class="form-group">
-              <label> Category </label>
-              <input type="text" name="category" value="{{ .Category }}" class="form-control" />
+              <label> Max </label>
+              <input type="text" name="max" value="{{ .data.Max }}" class="form-control" />
           </div>
           <div class="form-group">
-            <label> URL </label>
-            <input type="text" name="url" value="{{ .URL }}" class="form-control" />
+            <label> Min </label>
+            <input type="text" name="min" value="{{ .data.Min }}" class="form-control" />
           </div>
-          <div class="form-group">
-            <label> Rating </label>
-            <input type="text" name="rating" value="{{ .Rating }}" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label> Notes </label>            
-            <textarea name="notes" class="form-control" cols="50" rows="5">{{ .Notes }}</textarea>
-          </div>
-          <input type="submit" value="Save tool" class="btn btn-primary" />
+          <input type="submit" value="Save berat" class="btn btn-primary" />
         </form><br />
     </div>  
   {{ template "Footer" }}

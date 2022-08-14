@@ -3,9 +3,9 @@ package controller
 import (
 	"fmt"
 
-	"github.com/bonggar/gorestapi/database"
-	"github.com/bonggar/gorestapi/helper"
-	"github.com/bonggar/gorestapi/model"
+	"github.com/jagadwp/gin-crud-web/database"
+	"github.com/jagadwp/gin-crud-web/helper"
+	"github.com/jagadwp/gin-crud-web/model"
 
 	"github.com/gin-gonic/gin"
 )
@@ -66,7 +66,7 @@ func GetUsers(c *gin.Context) {
 	db := database.DB()
 	fmt.Println("masuk gett")
 	db.Find(&users)
-	
+
 	fmt.Println(users)
 	helper.RespondJSON(c, 200, "", users, nil)
 }

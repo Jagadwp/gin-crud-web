@@ -3,9 +3,10 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
-	"github.com/bonggar/gorestapi/helper"
-	"github.com/bonggar/gorestapi/service"
+	"github.com/jagadwp/gin-crud-web/helper"
+	"github.com/jagadwp/gin-crud-web/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,116 +19,133 @@ func NewBeratController(beratService *service.BeratService) *BeratController {
 	return &BeratController{beratService: beratService}
 }
 
-// var tmpl = template.Must(template.ParseGlob("templates/*"))
-
 //GetBerat : get a berat which find by ID
-// func GetBeratById(c *gin.Context) {
-// 	db := database.GetDB()
-// 	id := c.Params.ByName("id")
-// 	var berat model.Berat
-// 	db.First(&berat, id)
+func (ctr *BeratController) GetBeratById(c *gin.Context) {
+	id, err := strconv.Atoi(c.Query("id"))
 
-// 	if berat.ID != 0 {
-// 		helper.RespondJSON(c, 200, "", berat, nil)
-// 	} else {
-// 		helper.RespondJSON(c, 404, "Berat not found", nil, nil)
-// 	}
-// }
+	if err != nil {
+		helper.RespondJSON(c, 400, "Parameter id is not valid", nil, nil)
+	}
+
+	res, _ := ctr.beratService.GetBeratById(id)
+
+	if (*res).ID == 0 {
+		helper.RespondJSON(c, 404, "Berat not found", nil, nil)
+	}
+
+	c.HTML(http.StatusOK, "Show", gin.H{
+		"data": *res,
+	})
+}
 
 //GetBerats : get all berat
 func (ctr *BeratController) GetAllBerat(c *gin.Context) {
-	fmt.Println("MASUKKK controll")
 	res, err := ctr.beratService.GetAllBerat()
 
 	if err != nil {
 		helper.RespondJSON(c, 500, "Failed to process request", nil, nil)
 	}
 
-	fmt.Println("GASSS:")
-	fmt.Println(*res)
+	// fmt.Println("\nList berat\nData: ", *res)
 	c.HTML(http.StatusOK, "Index", gin.H{
 		"data": *res,
 	})
-	fmt.Println("sampe sini")
 
 }
 
+func (ctr *BeratController) NewBerat(c *gin.Context) {
+	c.HTML(http.StatusOK, "New", nil)
+}
+
 // //CreateBerat : create a berat
-// func CreateBerat(c *gin.Context) {
-// 	var berat model.Berat
+func (ctr *BeratController) CreateBerat(c *gin.Context) {
+	req := helper.BeratRequest{}
 
-// 	if err := c.ShouldBind(&berat); err != nil {
-// 		errorFields := helper.ConstructErrors(err)
-// 		helper.RespondJSON(c, 422, "Could not create berat", nil, errorFields)
-// 		return
-// 	}
+	if err := c.Bind(&req); err != nil {
+		helper.RespondJSON(c, 400, "Required fields are empty or not valid", nil, nil)
+	}
 
-// 	db := database.GetDB()
-// 	//manually check phone unique constraint
-// 	if !isUniquePhone(berat, false) {
-// 		errorFields := [1]helper.ErrorField{{ID: "phone", Message: "Phone already taken"}}
-// 		helper.RespondJSON(c, 422, "Could not create berat", nil, errorFields)
-// 		return
-// 	}
+	res, err := ctr.beratService.CreateBerat(&req)
 
-// 	//finally create the berat
-// 	db.Create(&berat)
+	if err != nil {
+		helper.RespondJSON(c, 500, "Failed to process request", nil, nil)
+	}
 
-// 	if berat.ID != 0 {
-// 		helper.RespondJSON(c, 201, "Berat has been created successfully", berat, nil)
-// 	} else {
-// 		helper.RespondJSON(c, 409, "Can not create berat", nil, nil)
-// 	}
-// }
+	fmt.Println("\nNew berat created\nData: ", res)
+	c.Redirect(http.StatusFound, "http://localhost:8080/")
+}
+
+func (ctr *BeratController) EditBerat(c *gin.Context) {
+	id, err := strconv.Atoi(c.Query("id"))
+
+	if err != nil {
+		helper.RespondJSON(c, 400, "Parameter id is not valid", nil, nil)
+	}
+
+	res, _ := ctr.beratService.GetBeratById(id)
+
+	if (*res).ID == 0 {
+		helper.RespondJSON(c, 404, "Berat not found", nil, nil)
+	}
+
+	c.HTML(http.StatusOK, "Edit", gin.H{
+		"data": *res,
+	})
+}
 
 // //UpdateBerat : edit a berat which find by ID
-// func UpdateBerat(c *gin.Context) {
-// 	var berat model.Berat
-// 	db := database.GetDB()
-// 	id := c.Params.ByName("id")
-// 	db.First(&berat, id)
+func (ctr *BeratController) UpdateBerat(c *gin.Context) {
+	id, err := strconv.Atoi(c.Query("id"))
 
-// 	if berat.ID != 0 {
-// 		var updatedBerat model.Berat
-// 		c.ShouldBind(&updatedBerat)
+	if err != nil {
+		helper.RespondJSON(c, 400, "Parameter id is not valid", nil, nil)
+	}
 
-// 		//manually check email unique constraint
-// 		if !isUniqueEmail(updatedBerat, true) {
-// 			errorFields := [1]helper.ErrorField{{ID: "email", Message: "Email already taken"}}
-// 			helper.RespondJSON(c, 422, "Could not create berat", nil, errorFields)
-// 			return
-// 		}
+	isExistRes, _ := ctr.beratService.GetBeratById(id)
 
-// 		//manually check phone unique constraint
-// 		if !isUniquePhone(updatedBerat, true) {
-// 			errorFields := [1]helper.ErrorField{{ID: "phone", Message: "Phone already taken"}}
-// 			helper.RespondJSON(c, 422, "Could not create berat", nil, errorFields)
-// 			return
-// 		}
+	if (*isExistRes).ID == 0 {
+		helper.RespondJSON(c, 404, "Berat not found", nil, nil)
+	}
 
-// 		//finally update the berat
-// 		db.Model(&berat).Updates(updatedBerat)
+	req := helper.BeratRequest{}
+	if err := c.Bind(&req); err != nil {
+		helper.RespondJSON(c, 400, "Required fields are empty or not valid", nil, nil)
+	}
 
-// 		helper.RespondJSON(c, 200, "Berat has been updated successfully", berat, nil)
-// 	} else {
-// 		helper.RespondJSON(c, 404, "Berat not found", nil, nil)
-// 	}
-// }
+	res, err := ctr.beratService.UpdateBerat(id, &req)
 
-// //DeleteBerat : delete a berat which find by ID
-// func DeleteBerat(c *gin.Context) {
-// 	var berat model.Berat
-// 	db := database.GetDB()
-// 	id := c.Params.ByName("id")
-// 	db.First(&berat, id)
+	if err != nil {
+		helper.RespondJSON(c, 500, err.Error(), nil, nil)
+	}
 
-// 	if berat.ID != 0 {
-// 		db.Delete(&berat)
-// 		helper.RespondJSON(c, 200, "Berat has been deleted successfully", nil, nil)
-// 	} else {
-// 		helper.RespondJSON(c, 404, "Berat not found", nil, nil)
-// 	}
-// }
+	fmt.Println("\nBerat updated\nData: ", res)
+	c.Redirect(http.StatusFound, "http://localhost:8080/")
+}
+
+//DeleteBerat : delete a berat which find by ID
+
+func (ctr *BeratController) DeleteBerat(c *gin.Context) {
+	id, err := strconv.Atoi(c.Query("id"))
+
+	if err != nil {
+		helper.RespondJSON(c, 400, "Parameter id is not valid", nil, nil)
+	}
+
+	isExistRes, _ := ctr.beratService.GetBeratById(id)
+
+	if (*isExistRes).ID == 0 {
+		helper.RespondJSON(c, 404, "Berat not found", nil, nil)
+	}
+
+	res, err := ctr.beratService.DeleteBerat(id)
+
+	if err != nil {
+		helper.RespondJSON(c, 500, "Failed to process request", nil, nil)
+	}
+
+	fmt.Println("\nBerat deleted\nData: ", res)
+	c.Redirect(http.StatusFound, "http://localhost:8080/")
+}
 
 // //OptionsBerat : supporting options for CORS
 // func OptionsBerat(c *gin.Context) {

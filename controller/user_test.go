@@ -8,7 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/bonggar/gorestapi/database"
+	"github.com/jagadwp/gin-crud-web/database"
 
 	"github.com/gin-gonic/gin"
 )
