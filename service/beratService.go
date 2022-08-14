@@ -35,14 +35,17 @@ func (b *BeratService) GetBeratById(id int) (*helper.BeratResponse, error) {
 }
 
 //GetBerats : get all berat
-func (b *BeratService) GetAllBerat() (*[]helper.BeratResponse, error) {
+func (b *BeratService) GetAllBerat() (*helper.IndexResponse, error) {
 	berats, err := b.beratRepo.GetAllBerat()
 
 	if err != nil {
 		return nil, err
 	}
 
-	var data []helper.BeratResponse
+	var data helper.IndexResponse
+
+	lenData := float32(len(*berats))
+	totMax, totMin, totDiff := 0, 0, 0
 
 	for _, berat := range *berats {
 		tempData := helper.BeratResponse{
@@ -52,8 +55,17 @@ func (b *BeratService) GetAllBerat() (*[]helper.BeratResponse, error) {
 			Diff: berat.Diff,
 			Date: berat.Date,
 		}
-		data = append(data, tempData)
+
+		totMax += berat.Max
+		totMin += berat.Min
+		totDiff += berat.Diff
+
+		data.Berat = append(data.Berat, tempData)
 	}
+
+	data.Max= float32(totMax) / lenData
+	data.Min = float32(totMin) / lenData
+	data.Diff = float32(totDiff) / lenData
 
 	return &data, nil
 }

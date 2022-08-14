@@ -40,7 +40,7 @@ func (ctr *BeratController) GetBeratById(c *gin.Context) {
 
 //GetBerats : get all berat
 func (ctr *BeratController) GetAllBerat(c *gin.Context) {
-	res, err := ctr.beratService.GetAllBerat()
+	data, err := ctr.beratService.GetAllBerat()
 
 	if err != nil {
 		helper.RespondJSON(c, 500, "Failed to process request", nil, nil)
@@ -48,7 +48,7 @@ func (ctr *BeratController) GetAllBerat(c *gin.Context) {
 
 	// fmt.Println("\nList berat\nData: ", *res)
 	c.HTML(http.StatusOK, "Index", gin.H{
-		"data": *res,
+		"data": *data,
 	})
 
 }
@@ -146,10 +146,3 @@ func (ctr *BeratController) DeleteBerat(c *gin.Context) {
 	fmt.Println("\nBerat deleted\nData: ", res)
 	c.Redirect(http.StatusFound, "http://localhost:8080/")
 }
-
-// //OptionsBerat : supporting options for CORS
-// func OptionsBerat(c *gin.Context) {
-// 	c.Writer.Header().Set("Access-Control-Allow-Methods", "DELETE,POST, PUT")
-// 	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-// 	c.Next()
-// }

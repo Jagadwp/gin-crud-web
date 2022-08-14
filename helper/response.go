@@ -1,8 +1,31 @@
 package helper
 
 import (
+	"time"
+
 	"github.com/gin-gonic/gin"
 )
+
+type BeratResponse struct {
+	ID   uint      `json:"id" form:"id"`
+	Max  int       `json:"max" form:"max"`
+	Min  int       `json:"min" form:"min"`
+	Diff int       `json:"diff" form:"diff"`
+	Date time.Time `json:"date" form:"date"`
+}
+
+type IndexResponse struct {
+	Berat []BeratResponse `json:"berat" form:"berat"`
+	Max  float32 `json:"max" form:"max"`
+	Min  float32 `json:"min" form:"min"`
+	Diff float32 `json:"diff" form:"diff"`
+}
+
+type AvgResponse struct {
+	Max  float32 `json:"max" form:"max"`
+	Min  float32 `json:"min" form:"min"`
+	Diff float32 `json:"diff" form:"diff"`
+}
 
 //ResponseData : response format
 type ResponseData struct {

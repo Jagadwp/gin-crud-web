@@ -18,14 +18,14 @@
     </thead>
     <tfoot>
       <tr>
-        <th>Tanggal</th>
-        <th>Max</th>
-        <th>Min</th>
-        <th>Perbedaan</th>
+        <th>Rata-Rata</th>
+        <th>{{ .data.Max }}</th>
+        <th>{{ .data.Min }}</th>
+        <th>{{ .data.Diff }}</th>
       </tr>
     </tfoot>
     <tbody>
-      {{ range .data }}
+      {{ range .data.Berat }}
       <tr>
         <td>{{ .Date.Format "2006-01-02" }}</td>
         <td>{{ .Max }}</td>
