@@ -1,0 +1,45 @@
+{{ define "Index" }} 
+{{ template "Header" }}
+<div class="container">
+  <h2>Tool List</h2>
+
+  <p>
+    <a href="/new" class="btn btn-primary">New Tool</a>
+  </p>
+  <table id="tabledata" class="display" style="width: 100%">
+    <thead>
+      <tr>
+        <th>Tanggal</th>
+        <th>Max</th>
+        <th>Min</th>
+        <th>Perbedaan</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Tanggal</th>
+        <th>Max</th>
+        <th>Min</th>
+        <th>Perbedaan</th>
+      </tr>
+    </tfoot>
+    <tbody>
+      {{ range .data }}
+      <tr>
+        <td>{{ .Date.Format "2006-1-2" }}</td>
+        <td>{{ .Max }}</td>
+        <td>{{ .Min }}</td>
+        <td>{{ .Diff }}</td>
+        <td>
+          <a href="/show?id={{ .ID }}" class="btn btn-primary">View</a>
+          <a href="/edit?id={{ .ID }}" class="btn btn-primary">Edit</a>
+          <a href="/delete?id={{ .ID }}" class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+{{ template "Footer" }} 
+{{ end }}
