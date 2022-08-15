@@ -12,7 +12,7 @@ func TestDBInitialization(t *testing.T) {
 	DatabaseInit()
 	if database != nil {
 		t.Logf("DB Connection Success")
-		if database.HasTable(model.User{}) {
+		if database.HasTable(model.Berat{}) {
 			t.Logf("DB Migration Success")
 		} else {
 			t.Fail()

@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"math"
 	"time"
 
@@ -11,16 +10,16 @@ import (
 )
 
 type BeratService struct {
-	beratRepo *repository.BeratRepository
+	BeratRepo repository.IBeratRepository
 }
 
-func NewBeratService(beratRepo *repository.BeratRepository) *BeratService {
-	return &BeratService{beratRepo: beratRepo}
+func NewBeratService(BeratRepo repository.IBeratRepository) *BeratService {
+	return &BeratService{BeratRepo: BeratRepo}
 }
 
 //GetBeratById : get a berat which find by ID
 func (b *BeratService) GetBeratById(id int) (*helper.BeratResponse, error) {
-	berat, err := b.beratRepo.GetBeratById(id)
+	berat, err := b.BeratRepo.GetBeratById(id)
 
 	if err != nil {
 		return nil, err
@@ -37,7 +36,7 @@ func (b *BeratService) GetBeratById(id int) (*helper.BeratResponse, error) {
 
 //GetBerats : get all berat
 func (b *BeratService) GetAllBerat() (*helper.IndexResponse, error) {
-	berats, err := b.beratRepo.GetAllBerat()
+	berats, err := b.BeratRepo.GetAllBerat()
 
 	if err != nil {
 		return nil, err
@@ -85,7 +84,7 @@ func (b *BeratService) CreateBerat(req *helper.BeratRequest) (*helper.BeratRespo
 		return nil, err
 	}
 
-	berat, err := b.beratRepo.CreateBerat(date, req.Max, req.Min, diff)
+	berat, err := b.BeratRepo.CreateBerat(date, req.Max, req.Min, diff)
 
 	if err != nil {
 		return nil, err
@@ -102,8 +101,7 @@ func (b *BeratService) CreateBerat(req *helper.BeratRequest) (*helper.BeratRespo
 
 //UpdateBerat : edit a berat which find by ID
 func (b *BeratService) UpdateBerat(id int, req *helper.BeratRequest) (*helper.BeratResponse, error) {
-	beratTemp, err := b.beratRepo.GetBeratById(id)
-
+	beratTemp, err := b.BeratRepo.GetBeratById(id)
 	if err != nil {
 		return nil, err
 	}
@@ -130,9 +128,8 @@ func (b *BeratService) UpdateBerat(id int, req *helper.BeratRequest) (*helper.Be
 		return nil, errors.New("min cannot be greater than max")
 	}
 	beratTemp.UpdatedAt = time.Now()
-	fmt.Println("BeratTempOTW :", beratTemp)
 
-	beratUpdated, err := b.beratRepo.UpdateBerat(beratTemp)
+	beratUpdated, err := b.BeratRepo.UpdateBerat(beratTemp)
 
 	if err != nil {
 		return nil, err
@@ -149,13 +146,13 @@ func (b *BeratService) UpdateBerat(id int, req *helper.BeratRequest) (*helper.Be
 
 //DeleteBerat : delete a berat which find by ID
 func (s *BeratService) DeleteBerat(id int) (*helper.BeratResponse, error) {
-	berat, err := s.beratRepo.GetBeratById(id)
+	berat, err := s.BeratRepo.GetBeratById(id)
 
 	if err != nil {
 		return nil, err
 	}
 
-	berat, err = s.beratRepo.DeleteBerat(berat)
+	berat, err = s.BeratRepo.DeleteBerat(berat)
 
 	if err != nil {
 		return nil, err

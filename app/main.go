@@ -21,7 +21,10 @@ func main() {
 
 	// Init Repo, Service, Controller
 	beratRepo := repository.NewBeratRepository(DB)
-	beratService := service.NewBeratService(beratRepo)
+
+	// Using interface for testing for ease of testing
+	var IBeratRepo repository.IBeratRepository = beratRepo
+	beratService := service.NewBeratService(IBeratRepo)
 	beratController := controller.NewBeratController(beratService)
 
 	// Init Gin
