@@ -1,15 +1,9 @@
 # GIN CRUD WEB
 
-GIN CRUD WEB written in Go (Golang) powered by popular Gin Web Framework, Go HTML template, and Gorm ORM library. The main features is about CRUD of 'Berat' entity.
+## About
+GIN CRUD WEB written in Go (Golang) powered by popular Gin Web Framework, Go HTML template, and Gorm ORM library. The main features is about CRUD of <b>'Berat'</b> entity.
 
-# Dependencies
-
-- Gin: github.com/gin-gonic/gin,
-- Gorm: github.com/gin-gonic/gin.
-- Godotenv: github.com/joho/godotenv
-- Testify: github.com/stretchr/testify
-
-# Features
+## Features
 
 - CRUD Berat
 - Go HTML Template Frontend CRUD Demo
@@ -19,15 +13,31 @@ GIN CRUD WEB written in Go (Golang) powered by popular Gin Web Framework, Go HTM
 - Gracefully Shutdown
 - Unit Test
 - Dockerize
+- Use Clean Architecture
+![image](https://user-images.githubusercontent.com/67728406/184624044-e0666d16-9ff7-4224-8606-8ba8cf9993a2.png)
 
+## Dependencies
+
+- Gin: github.com/gin-gonic/gin,
+- Gorm: github.com/gin-gonic/gin.
+- Godotenv: github.com/joho/godotenv
+- Testify: github.com/stretchr/testify
 ## How To Run
 
-> go mod tidy
+> go mod tidy <br>
 > go run app/main.go
 
 ## How To Build Docker Image 
 
 > docker build -t  gin-crud-web:1.0 . 
+
+## Unit Test
+
+Run unit test :
+
+> go test -v -cover ./...
+
+This command will run database_test.go & beratService_test.go
 
 ## Config
 
@@ -44,12 +54,6 @@ Just copy .env.example file to .env
 - Database name, default: mydata
   > DB_NAME=gorestdb
 
-## Unit Test
-
-Run unit test :
-
-> go test -v ./...
-> This command will run database_test.go & beratService_test.go
 
 ## Routes
 
